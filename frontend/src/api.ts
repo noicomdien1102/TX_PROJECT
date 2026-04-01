@@ -39,7 +39,10 @@ export interface AppendDiceResponse {
 
 // ─── API Client ───────────────────────────────────────────────────────────────
 
-const BASE = '/api';
+// If injected by Render, use it (adds https://). Otherwise fallback to local Vite proxy (/api)
+const BASE = import.meta.env.VITE_API_URL 
+  ? `https://${import.meta.env.VITE_API_URL}` 
+  : '/api';
 
 export const api = {
   async predict(): Promise<PredictResponse> {

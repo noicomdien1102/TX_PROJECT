@@ -1,0 +1,30 @@
+services:
+  # 1. Python Backend Web Service
+  - type: web
+    name: tx-predict-api
+    env: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+
+  # 2. React Frontend Static Site
+  - type: web
+    name: tx-predict-ui
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        # Magic: Render will auto-inject the actual Backend URL here! 
+        fromService:
+          type: web
+          name: tx-predict-api
+          property: host
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
