@@ -1,0 +1,4199 @@
+{
+  "session_id": "default",
+  "description": "",
+  "history": [
+    {
+      "ts": "2026-04-01T06:57:29.683240Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": null,
+        "prob_t": null,
+        "prob_x": null,
+        "top_pattern": null,
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.683255Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": null,
+        "prob_t": null,
+        "prob_x": null,
+        "top_pattern": null,
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.683258Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": null,
+        "prob_t": null,
+        "prob_x": null,
+        "top_pattern": null,
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.683282Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.65,
+        "prob_x": 0.35,
+        "top_pattern": null,
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.683302Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.575,
+        "prob_x": 0.425,
+        "top_pattern": null,
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.683371Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5004,
+        "prob_x": 0.4996,
+        "top_pattern": {
+          "name": "Cầu Giảm Dần (3-2-1)",
+          "detail": "Nhịp 3-2 xong, bắt nhịp 1",
+          "prob": 0.382,
+          "percentage_str": "38%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.683412Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.482,
+        "prob_x": 0.5182,
+        "top_pattern": {
+          "name": "Cầu Double Bệt (Bệt Đối Xứng)",
+          "detail": "Đã cân xong 2 bệt",
+          "prob": 0.41,
+          "percentage_str": "41%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.683464Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4148,
+        "prob_x": 0.5852,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Xong nhịp 3-1",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.683513Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3066,
+        "prob_x": 0.661,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Chờ nhịp 3",
+          "prob": 0.38,
+          "percentage_str": "38%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.683563Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3238,
+        "prob_x": 0.578,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Chờ nhịp 3",
+          "prob": 0.205,
+          "percentage_str": "20%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.683609Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5308,
+        "prob_x": 0.4694,
+        "top_pattern": {
+          "name": "Cầu Bẻ Giả (Fake Break)",
+          "detail": "Bẻ giả thành công, tiếp tục Bệt",
+          "prob": 0.347,
+          "percentage_str": "34%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.683653Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3306,
+        "prob_x": 0.6694,
+        "top_pattern": {
+          "name": "Cầu Bẻ Giả (Fake Break)",
+          "detail": "Bẻ giả thành công, tiếp tục Bệt",
+          "prob": 0.685,
+          "percentage_str": "68%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.683697Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.324,
+        "prob_x": 0.676,
+        "top_pattern": {
+          "name": "Cầu Bẻ Giả (Fake Break)",
+          "detail": "Bẻ giả thành công, tiếp tục Bệt (Bị ép giảm do Tỉ lệ X>65%)",
+          "prob": 0.685,
+          "percentage_str": "68%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.683741Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3185,
+        "prob_x": 0.6815,
+        "top_pattern": {
+          "name": "Cầu Bẻ Giả (Fake Break)",
+          "detail": "Bẻ giả thành công, tiếp tục Bệt (Bị ép giảm do Tỉ lệ X>65%)",
+          "prob": 0.685,
+          "percentage_str": "68%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.683784Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3137,
+        "prob_x": 0.6863,
+        "top_pattern": {
+          "name": "Cầu Bẻ Giả (Fake Break)",
+          "detail": "Bẻ giả thành công, tiếp tục Bệt (Bị ép giảm do Tỉ lệ X>65%)",
+          "prob": 0.685,
+          "percentage_str": "68%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.683826Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.45,
+        "prob_x": 0.55,
+        "top_pattern": null,
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.683873Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6634,
+        "prob_x": 0.3366,
+        "top_pattern": {
+          "name": "Cầu Double Bệt (Bệt Đối Xứng)",
+          "detail": "Cân bệt trước đó",
+          "prob": 0.525,
+          "percentage_str": "52%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.683929Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3717,
+        "prob_x": 0.6283,
+        "top_pattern": {
+          "name": "Cầu 2-1",
+          "detail": "Nhịp 2-1",
+          "prob": 0.441,
+          "percentage_str": "44%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.683985Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.548,
+        "prob_x": 0.452,
+        "top_pattern": {
+          "name": "Cầu 1-3",
+          "detail": "Chờ nhịp 3",
+          "prob": 0.593,
+          "percentage_str": "59%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.684041Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.381,
+        "prob_x": 0.5276,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.181,
+          "percentage_str": "18%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.684088Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.412,
+        "prob_x": 0.4684,
+        "top_pattern": {
+          "name": "Cầu 2-1-2-1 (Lặp lệch)",
+          "detail": "Vừa nhịp 1, chờ 2",
+          "prob": 0.271,
+          "percentage_str": "27%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.684138Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.316,
+        "prob_x": 0.6836,
+        "top_pattern": {
+          "name": "Cầu 2-2 (Nhịp đôi)",
+          "detail": "Nhịp đôi đều đặn",
+          "prob": 0.37,
+          "percentage_str": "37%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.684183Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3892,
+        "prob_x": 0.6108,
+        "top_pattern": {
+          "name": "Bệt Xỉu (3+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.457,
+          "percentage_str": "45%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.684239Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.2505,
+        "prob_x": 0.7495,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Xong nhịp 3-1",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.684292Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5122,
+        "prob_x": 0.4874,
+        "top_pattern": {
+          "name": "Cầu Double Bệt (Bệt Đối Xứng)",
+          "detail": "Cân bệt trước đó",
+          "prob": 0.37,
+          "percentage_str": "37%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.684348Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4504,
+        "prob_x": 0.55,
+        "top_pattern": {
+          "name": "Cầu Double Bệt (Bệt Đối Xứng)",
+          "detail": "Đã cân xong 2 bệt",
+          "prob": 0.405,
+          "percentage_str": "40%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.684396Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.709,
+        "prob_x": 0.291,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Xong nhịp 3-1",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.684446Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.245,
+        "prob_x": 0.7554,
+        "top_pattern": {
+          "name": "Bệt Xỉu (2+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.39,
+          "percentage_str": "39%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.684496Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.463,
+        "prob_x": 0.537,
+        "top_pattern": {
+          "name": "Bệt Xỉu (3+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.426,
+          "percentage_str": "42%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.684547Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.279,
+        "prob_x": 0.721,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Xong nhịp 3-1",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.684606Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.192,
+        "prob_x": 0.75,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Chờ nhịp 3",
+          "prob": 0.383,
+          "percentage_str": "38%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.684668Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.142,
+        "prob_x": 0.6712,
+        "top_pattern": {
+          "name": "Bệt Xỉu (2+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.187,
+          "percentage_str": "18%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.684728Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4591,
+        "prob_x": 0.4789,
+        "top_pattern": {
+          "name": "Cầu Tăng Dần (1-2-3)",
+          "detail": "Đang lên nhịp 3",
+          "prob": 0.289,
+          "percentage_str": "28%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.684790Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.49,
+        "prob_x": 0.51,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Dấu hiệu Cầu 1-1",
+          "prob": 0.685,
+          "percentage_str": "68%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.684856Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4482,
+        "prob_x": 0.5518,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.65,
+          "percentage_str": "65%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.684926Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5203,
+        "prob_x": 0.4797,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.685,
+          "percentage_str": "68%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.684991Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3805,
+        "prob_x": 0.6195,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.705,
+          "percentage_str": "70%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.685063Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3844,
+        "prob_x": 0.4852,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.252,
+          "percentage_str": "25%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.685155Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.429,
+        "prob_x": 0.571,
+        "top_pattern": {
+          "name": "Bệt Tài (3+)",
+          "detail": "Đang theo xu hướng T",
+          "prob": 0.585,
+          "percentage_str": "58%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.685238Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.775,
+        "prob_x": 0.225,
+        "top_pattern": {
+          "name": "Bệt Tài (4+)",
+          "detail": "Đang theo xu hướng T (Phá kỷ lục cũ - Báo động gãy)",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.685325Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.1935,
+        "prob_x": 0.8065,
+        "top_pattern": {
+          "name": "Cầu 2-4 / 4-2",
+          "detail": "Đang xuống nhịp 2",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.685420Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6045,
+        "prob_x": 0.3955,
+        "top_pattern": {
+          "name": "Cầu Bẻ Giả (Fake Break)",
+          "detail": "Dấu hiệu bẻ giả, trở lại Bệt",
+          "prob": 0.435,
+          "percentage_str": "43%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.685518Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5032,
+        "prob_x": 0.3296,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.194,
+          "percentage_str": "19%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.685623Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5267,
+        "prob_x": 0.4137,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.296,
+          "percentage_str": "29%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.685711Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3296,
+        "prob_x": 0.6708,
+        "top_pattern": {
+          "name": "Bệt Xỉu (2+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.384,
+          "percentage_str": "38%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.685796Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4854,
+        "prob_x": 0.5146,
+        "top_pattern": {
+          "name": "Bệt Xỉu (3+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.487,
+          "percentage_str": "48%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.685884Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3629,
+        "prob_x": 0.6371,
+        "top_pattern": {
+          "name": "Bệt Xỉu (4+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.643,
+          "percentage_str": "64%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.685970Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.8012,
+        "prob_x": 0.1988,
+        "top_pattern": {
+          "name": "Cầu 2-4 / 4-2",
+          "detail": "Đang xuống nhịp 2",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.686061Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3886,
+        "prob_x": 0.6114,
+        "top_pattern": {
+          "name": "Cầu Bẻ Giả (Fake Break)",
+          "detail": "Dấu hiệu bẻ giả, trở lại Bệt",
+          "prob": 0.435,
+          "percentage_str": "43%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.686159Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3994,
+        "prob_x": 0.6006,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.705,
+          "percentage_str": "70%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.686258Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6445,
+        "prob_x": 0.3555,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.718,
+          "percentage_str": "71%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.686358Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3456,
+        "prob_x": 0.6544,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.727,
+          "percentage_str": "72%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.686459Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3588,
+        "prob_x": 0.4729,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.267,
+          "percentage_str": "26%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.686558Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5602,
+        "prob_x": 0.4398,
+        "top_pattern": {
+          "name": "Bệt Tài (3+)",
+          "detail": "Đang theo xu hướng T",
+          "prob": 0.619,
+          "percentage_str": "61%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.686658Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.8545,
+        "prob_x": 0.1455,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Xong nhịp 3-1",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.686767Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5669,
+        "prob_x": 0.3231,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Chờ nhịp 3",
+          "prob": 0.348,
+          "percentage_str": "34%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.686890Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6307,
+        "prob_x": 0.3693,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.685,
+          "percentage_str": "68%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.686999Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3745,
+        "prob_x": 0.4501,
+        "top_pattern": {
+          "name": "Bệt Xỉu (2+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.266,
+          "percentage_str": "26%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.687123Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3614,
+        "prob_x": 0.5589,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.325,
+          "percentage_str": "32%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.687232Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5103,
+        "prob_x": 0.4897,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Dấu hiệu Cầu 1-1",
+          "prob": 0.531,
+          "percentage_str": "53%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.687356Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3758,
+        "prob_x": 0.6242,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.685,
+          "percentage_str": "68%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.687477Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3685,
+        "prob_x": 0.4594,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.257,
+          "percentage_str": "25%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.687587Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5735,
+        "prob_x": 0.349,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.333,
+          "percentage_str": "33%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.687695Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3236,
+        "prob_x": 0.6764,
+        "top_pattern": {
+          "name": "Bệt Xỉu (2+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.409,
+          "percentage_str": "40%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.687794Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3953,
+        "prob_x": 0.6042,
+        "top_pattern": {
+          "name": "Bệt Xỉu (3+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.481,
+          "percentage_str": "48%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.687896Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.15,
+        "prob_x": 0.85,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Xong nhịp 3-1",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.688004Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3416,
+        "prob_x": 0.5534,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Chờ nhịp 3",
+          "prob": 0.379,
+          "percentage_str": "37%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.688115Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3766,
+        "prob_x": 0.6234,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.685,
+          "percentage_str": "68%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.688236Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6303,
+        "prob_x": 0.3697,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.696,
+          "percentage_str": "69%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.688353Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.346,
+        "prob_x": 0.654,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.705,
+          "percentage_str": "70%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.688466Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6245,
+        "prob_x": 0.3755,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Ping pong quá dài (Chuẩn bị gãy)",
+          "prob": 0.677,
+          "percentage_str": "67%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.688584Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3649,
+        "prob_x": 0.6351,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Ping pong quá dài (Chuẩn bị gãy)",
+          "prob": 0.685,
+          "percentage_str": "68%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.688709Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3432,
+        "prob_x": 0.4758,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.266,
+          "percentage_str": "26%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.688827Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5713,
+        "prob_x": 0.3539,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.332,
+          "percentage_str": "33%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.688950Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.2994,
+        "prob_x": 0.7001,
+        "top_pattern": {
+          "name": "Bệt Xỉu (2+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.397,
+          "percentage_str": "39%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.689068Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4153,
+        "prob_x": 0.5847,
+        "top_pattern": {
+          "name": "Bệt Xỉu (3+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.478,
+          "percentage_str": "47%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.689184Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4032,
+        "prob_x": 0.5968,
+        "top_pattern": {
+          "name": "Bệt Xỉu (4+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.636,
+          "percentage_str": "63%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.689308Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.836,
+        "prob_x": 0.164,
+        "top_pattern": {
+          "name": "Cầu 2-4 / 4-2",
+          "detail": "Đang xuống nhịp 2",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.689433Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4574,
+        "prob_x": 0.5426,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Dấu hiệu Cầu 1-1",
+          "prob": 0.421,
+          "percentage_str": "42%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.689570Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3434,
+        "prob_x": 0.4322,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.222,
+          "percentage_str": "22%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.689697Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3306,
+        "prob_x": 0.5946,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.35,
+          "percentage_str": "35%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.689849Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5937,
+        "prob_x": 0.4063,
+        "top_pattern": {
+          "name": "Cầu Tăng Dần (1-2-3)",
+          "detail": "Đang lên nhịp 3",
+          "prob": 0.369,
+          "percentage_str": "36%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.689991Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6154,
+        "prob_x": 0.3851,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.41,
+          "percentage_str": "41%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.690127Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.396,
+        "prob_x": 0.604,
+        "top_pattern": {
+          "name": "Bệt Xỉu (2+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.569,
+          "percentage_str": "56%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.690403Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3833,
+        "prob_x": 0.6167,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.382,
+          "percentage_str": "38%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.690574Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5563,
+        "prob_x": 0.4437,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Dấu hiệu Cầu 1-1",
+          "prob": 0.607,
+          "percentage_str": "60%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.690730Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3303,
+        "prob_x": 0.6697,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.718,
+          "percentage_str": "71%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.690877Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6513,
+        "prob_x": 0.3487,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.723,
+          "percentage_str": "72%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.691022Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.4254,
+        "prob_x": 0.4113,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.267,
+          "percentage_str": "26%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.691159Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4032,
+        "prob_x": 0.5968,
+        "top_pattern": {
+          "name": "Bệt Xỉu (3+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.65,
+          "percentage_str": "65%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.691297Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.1249,
+        "prob_x": 0.8751,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Xong nhịp 3-1",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.691436Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.611,
+        "prob_x": 0.389,
+        "top_pattern": {
+          "name": "Bệt Tài (2+)",
+          "detail": "Đang theo xu hướng T",
+          "prob": 0.392,
+          "percentage_str": "39%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.691640Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6563,
+        "prob_x": 0.2453,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.338,
+          "percentage_str": "33%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.691784Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4089,
+        "prob_x": 0.5911,
+        "top_pattern": {
+          "name": "Bệt Xỉu (2+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.547,
+          "percentage_str": "54%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.691911Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3865,
+        "prob_x": 0.6135,
+        "top_pattern": {
+          "name": "Cầu 2-2 (Nhịp đôi)",
+          "detail": "Chờ hoàn thành nhịp 2",
+          "prob": 0.35,
+          "percentage_str": "35%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.692033Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5186,
+        "prob_x": 0.4814,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Dấu hiệu Cầu 1-1",
+          "prob": 0.569,
+          "percentage_str": "56%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.692204Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.3995,
+        "prob_x": 0.3938,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.225,
+          "percentage_str": "22%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.692355Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.2913,
+        "prob_x": 0.536,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.27,
+          "percentage_str": "27%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.692553Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5174,
+        "prob_x": 0.4826,
+        "top_pattern": {
+          "name": "Cầu 2-2 (Nhịp đôi)",
+          "detail": "Nhịp đôi đều đặn",
+          "prob": 0.39,
+          "percentage_str": "39%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:29.692693Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5579,
+        "prob_x": 0.4421,
+        "top_pattern": {
+          "name": "Cầu 2-2 (Nhịp đôi)",
+          "detail": "Chờ hoàn thành nhịp 2",
+          "prob": 0.362,
+          "percentage_str": "36%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.187828Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4372,
+        "prob_x": 0.5628,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Dấu hiệu Cầu 1-1",
+          "prob": 0.569,
+          "percentage_str": "56%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.188042Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6516,
+        "prob_x": 0.3484,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.7,
+          "percentage_str": "70%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.188231Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3237,
+        "prob_x": 0.6763,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.705,
+          "percentage_str": "70%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.188440Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.2596,
+        "prob_x": 0.5356,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.279,
+          "percentage_str": "27%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.188631Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5565,
+        "prob_x": 0.3174,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.318,
+          "percentage_str": "31%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.188821Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4348,
+        "prob_x": 0.5652,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Dấu hiệu Cầu 1-1",
+          "prob": 0.582,
+          "percentage_str": "58%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.189014Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.2369,
+        "prob_x": 0.5187,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.258,
+          "percentage_str": "25%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.189202Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5041,
+        "prob_x": 0.4959,
+        "top_pattern": {
+          "name": "Bệt Tài (3+)",
+          "detail": "Đang theo xu hướng T",
+          "prob": 0.561,
+          "percentage_str": "56%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.189394Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.9053,
+        "prob_x": 0.0947,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Xong nhịp 3-1",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.189572Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5366,
+        "prob_x": 0.3431,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Chờ nhịp 3",
+          "prob": 0.331,
+          "percentage_str": "33%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.189754Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.2699,
+        "prob_x": 0.4239,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.194,
+          "percentage_str": "19%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.189932Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5831,
+        "prob_x": 0.2947,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.323,
+          "percentage_str": "32%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.190108Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4782,
+        "prob_x": 0.5218,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Dấu hiệu Cầu 1-1",
+          "prob": 0.544,
+          "percentage_str": "54%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.190288Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.2607,
+        "prob_x": 0.4943,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.252,
+          "percentage_str": "25%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.190471Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5431,
+        "prob_x": 0.2613,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.283,
+          "percentage_str": "28%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.190658Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4871,
+        "prob_x": 0.5129,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Dấu hiệu Cầu 1-1",
+          "prob": 0.544,
+          "percentage_str": "54%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.190842Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.2559,
+        "prob_x": 0.4919,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.249,
+          "percentage_str": "24%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.191030Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5049,
+        "prob_x": 0.4951,
+        "top_pattern": {
+          "name": "Bệt Tài (3+)",
+          "detail": "Đang theo xu hướng T",
+          "prob": 0.556,
+          "percentage_str": "55%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.191209Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.8887,
+        "prob_x": 0.1113,
+        "top_pattern": {
+          "name": "Bệt Tài (4+)",
+          "detail": "Đang theo xu hướng T",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.191447Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.1202,
+        "prob_x": 0.8798,
+        "top_pattern": {
+          "name": "Cầu 2-4 / 4-2",
+          "detail": "Đang xuống nhịp 2",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.191627Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3535,
+        "prob_x": 0.547,
+        "top_pattern": {
+          "name": "Bệt Xỉu (2+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.34,
+          "percentage_str": "34%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.191788Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3543,
+        "prob_x": 0.6463,
+        "top_pattern": {
+          "name": "Bệt Xỉu (3+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.516,
+          "percentage_str": "51%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.191942Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.111,
+        "prob_x": 0.889,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Xong nhịp 3-1",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.192095Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6727,
+        "prob_x": 0.3273,
+        "top_pattern": {
+          "name": "Bệt Tài (2+)",
+          "detail": "Đang theo xu hướng T",
+          "prob": 0.415,
+          "percentage_str": "41%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.192253Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6205,
+        "prob_x": 0.269,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.332,
+          "percentage_str": "33%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.192406Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4939,
+        "prob_x": 0.5061,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Dấu hiệu Cầu 1-1",
+          "prob": 0.544,
+          "percentage_str": "54%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.192559Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6537,
+        "prob_x": 0.3463,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.685,
+          "percentage_str": "68%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.192716Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.4784,
+        "prob_x": 0.3344,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.259,
+          "percentage_str": "25%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.192873Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3123,
+        "prob_x": 0.5726,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.325,
+          "percentage_str": "32%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.193030Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5453,
+        "prob_x": 0.4554,
+        "top_pattern": {
+          "name": "Cầu 2-2 (Nhịp đôi)",
+          "detail": "Nhịp đôi đều đặn",
+          "prob": 0.391,
+          "percentage_str": "39%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.193213Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6263,
+        "prob_x": 0.373,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.343,
+          "percentage_str": "34%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.193533Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4883,
+        "prob_x": 0.5117,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Dấu hiệu Cầu 1-1",
+          "prob": 0.544,
+          "percentage_str": "54%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.193854Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.2487,
+        "prob_x": 0.5082,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.245,
+          "percentage_str": "24%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.194252Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5409,
+        "prob_x": 0.2609,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.274,
+          "percentage_str": "27%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.194600Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4149,
+        "prob_x": 0.5851,
+        "top_pattern": {
+          "name": "Cầu 2-2 (Nhịp đôi)",
+          "detail": "Nhịp đôi đều đặn",
+          "prob": 0.382,
+          "percentage_str": "38%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.194814Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4094,
+        "prob_x": 0.5906,
+        "top_pattern": {
+          "name": "Cầu 2-2 (Nhịp đôi)",
+          "detail": "Chờ hoàn thành nhịp 2",
+          "prob": 0.338,
+          "percentage_str": "33%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.195048Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.408,
+        "prob_x": 0.592,
+        "top_pattern": {
+          "name": "Cầu 2-2 (Nhịp đôi)",
+          "detail": "Nhịp đôi đều đặn",
+          "prob": 0.581,
+          "percentage_str": "58%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.195251Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.8454,
+        "prob_x": 0.1546,
+        "top_pattern": {
+          "name": "Bệt Tài (3+)",
+          "detail": "Đang theo xu hướng T",
+          "prob": 0.636,
+          "percentage_str": "63%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.195740Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.9054,
+        "prob_x": 0.0946,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Xong nhịp 3-1",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.195979Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5604,
+        "prob_x": 0.322,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Chờ nhịp 3",
+          "prob": 0.352,
+          "percentage_str": "35%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.196274Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.2587,
+        "prob_x": 0.4507,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.206,
+          "percentage_str": "20%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.196532Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6069,
+        "prob_x": 0.3925,
+        "top_pattern": {
+          "name": "Bệt Tài (3+)",
+          "detail": "Đang theo xu hướng T",
+          "prob": 0.444,
+          "percentage_str": "44%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.196744Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.8299,
+        "prob_x": 0.1701,
+        "top_pattern": {
+          "name": "Bệt Tài (4+)",
+          "detail": "Đang theo xu hướng T",
+          "prob": 0.626,
+          "percentage_str": "62%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.196970Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.113,
+        "prob_x": 0.887,
+        "top_pattern": {
+          "name": "Cầu 2-4 / 4-2",
+          "detail": "Đang xuống nhịp 2",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.198353Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3416,
+        "prob_x": 0.5408,
+        "top_pattern": {
+          "name": "Bệt Xỉu (2+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.328,
+          "percentage_str": "32%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.198756Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3638,
+        "prob_x": 0.6355,
+        "top_pattern": {
+          "name": "Bệt Xỉu (3+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.495,
+          "percentage_str": "49%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.199010Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4661,
+        "prob_x": 0.5339,
+        "top_pattern": {
+          "name": "Bệt Xỉu (4+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.598,
+          "percentage_str": "59%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.199231Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.0797,
+        "prob_x": 0.9203,
+        "top_pattern": {
+          "name": "Bệt Xỉu (5+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.199405Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.0767,
+        "prob_x": 0.9233,
+        "top_pattern": {
+          "name": "Bệt Xỉu (6+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.199581Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5427,
+        "prob_x": 0.4573,
+        "top_pattern": null,
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.199761Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4271,
+        "prob_x": 0.5729,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Dấu hiệu Cầu 1-1",
+          "prob": 0.374,
+          "percentage_str": "37%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.199942Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.4396,
+        "prob_x": 0.3166,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.233,
+          "percentage_str": "23%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.200123Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3062,
+        "prob_x": 0.5761,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.328,
+          "percentage_str": "32%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.200310Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5292,
+        "prob_x": 0.4708,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Dấu hiệu Cầu 1-1",
+          "prob": 0.544,
+          "percentage_str": "54%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.200529Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.4603,
+        "prob_x": 0.3102,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.244,
+          "percentage_str": "24%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.200725Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4127,
+        "prob_x": 0.5873,
+        "top_pattern": {
+          "name": "Bệt Xỉu (3+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.63,
+          "percentage_str": "63%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.200945Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.0989,
+        "prob_x": 0.9011,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Xong nhịp 3-1",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.201132Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6279,
+        "prob_x": 0.3721,
+        "top_pattern": {
+          "name": "Bệt Tài (2+)",
+          "detail": "Đang theo xu hướng T",
+          "prob": 0.406,
+          "percentage_str": "40%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.201370Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5781,
+        "prob_x": 0.3062,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.323,
+          "percentage_str": "32%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.201568Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4922,
+        "prob_x": 0.5078,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Dấu hiệu Cầu 1-1",
+          "prob": 0.513,
+          "percentage_str": "51%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.201762Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6141,
+        "prob_x": 0.3859,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.667,
+          "percentage_str": "66%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.202070Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3671,
+        "prob_x": 0.6329,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.674,
+          "percentage_str": "67%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.202265Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6215,
+        "prob_x": 0.3785,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.68,
+          "percentage_str": "68%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.202457Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.4685,
+        "prob_x": 0.3488,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.261,
+          "percentage_str": "26%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.202648Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4187,
+        "prob_x": 0.5813,
+        "top_pattern": {
+          "name": "Bệt Xỉu (3+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.619,
+          "percentage_str": "61%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.202841Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.094,
+        "prob_x": 0.906,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Xong nhịp 3-1",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.203037Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3232,
+        "prob_x": 0.5514,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Chờ nhịp 3",
+          "prob": 0.329,
+          "percentage_str": "32%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.203228Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3742,
+        "prob_x": 0.6258,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.664,
+          "percentage_str": "66%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.203423Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.2583,
+        "prob_x": 0.5474,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.267,
+          "percentage_str": "26%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.203631Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5125,
+        "prob_x": 0.4875,
+        "top_pattern": {
+          "name": "Bệt Tài (3+)",
+          "detail": "Đang theo xu hướng T",
+          "prob": 0.565,
+          "percentage_str": "56%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.203822Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.858,
+        "prob_x": 0.142,
+        "top_pattern": {
+          "name": "Bệt Tài (4+)",
+          "detail": "Đang theo xu hướng T",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.204012Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.903,
+        "prob_x": 0.097,
+        "top_pattern": {
+          "name": "Bệt Tài (5+)",
+          "detail": "Đang theo xu hướng T (Phá kỷ lục cũ - Báo động gãy)",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.204200Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.903,
+        "prob_x": 0.097,
+        "top_pattern": {
+          "name": "Bệt Tài (6+)",
+          "detail": "Đang theo xu hướng T (Phá kỷ lục cũ - Báo động gãy)",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.204391Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.906,
+        "prob_x": 0.094,
+        "top_pattern": {
+          "name": "Bệt Tài (7+)",
+          "detail": "Đang theo xu hướng T (Phá kỷ lục cũ - Báo động gãy)",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.204594Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.909,
+        "prob_x": 0.091,
+        "top_pattern": {
+          "name": "Bệt Tài (8+)",
+          "detail": "Đang theo xu hướng T (Phá kỷ lục cũ - Báo động gãy)",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.204786Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5673,
+        "prob_x": 0.4327,
+        "top_pattern": null,
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.204979Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.1695,
+        "prob_x": 0.8305,
+        "top_pattern": {
+          "name": "Bệt Xỉu (2+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.58,
+          "percentage_str": "57%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.205179Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.344,
+        "prob_x": 0.656,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.382,
+          "percentage_str": "38%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.205382Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5228,
+        "prob_x": 0.4772,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Dấu hiệu Cầu 1-1",
+          "prob": 0.511,
+          "percentage_str": "51%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.205588Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.4567,
+        "prob_x": 0.308,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.225,
+          "percentage_str": "22%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.205794Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.2881,
+        "prob_x": 0.5195,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.275,
+          "percentage_str": "27%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.205999Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5149,
+        "prob_x": 0.4851,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Dấu hiệu Cầu 1-1",
+          "prob": 0.511,
+          "percentage_str": "51%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.206203Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3884,
+        "prob_x": 0.6116,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.664,
+          "percentage_str": "66%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.206416Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.2873,
+        "prob_x": 0.5242,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.264,
+          "percentage_str": "26%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.206629Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6169,
+        "prob_x": 0.272,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.324,
+          "percentage_str": "32%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.206834Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.511,
+        "prob_x": 0.489,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Dấu hiệu Cầu 1-1",
+          "prob": 0.511,
+          "percentage_str": "51%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.207044Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.2709,
+        "prob_x": 0.4867,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.236,
+          "percentage_str": "23%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.207264Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5555,
+        "prob_x": 0.2586,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 2-1",
+          "prob": 0.275,
+          "percentage_str": "27%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.207471Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5133,
+        "prob_x": 0.4867,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Dấu hiệu Cầu 1-1",
+          "prob": 0.511,
+          "percentage_str": "51%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.207683Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6351,
+        "prob_x": 0.3649,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.664,
+          "percentage_str": "66%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.207900Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3858,
+        "prob_x": 0.6142,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.67,
+          "percentage_str": "67%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.208116Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6414,
+        "prob_x": 0.3586,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.676,
+          "percentage_str": "67%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.208330Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.407,
+        "prob_x": 0.593,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Ping pong quá dài (Chuẩn bị gãy)",
+          "prob": 0.633,
+          "percentage_str": "63%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.208555Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.612,
+        "prob_x": 0.388,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Ping pong quá dài (Chuẩn bị gãy)",
+          "prob": 0.639,
+          "percentage_str": "63%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.208774Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.4996,
+        "prob_x": 0.3204,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.262,
+          "percentage_str": "26%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.208989Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.4419,
+        "prob_x": 0.5581,
+        "top_pattern": {
+          "name": "Bệt Xỉu (3+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.611,
+          "percentage_str": "61%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.209208Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.0987,
+        "prob_x": 0.9013,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Xong nhịp 3-1",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.209434Z",
+      "result": "T",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3505,
+        "prob_x": 0.5318,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Chờ nhịp 3",
+          "prob": 0.323,
+          "percentage_str": "32%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.209670Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3703,
+        "prob_x": 0.6297,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.673,
+          "percentage_str": "67%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T06:57:37.209896Z",
+      "result": "X",
+      "source": "image",
+      "dice": null,
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6393,
+        "prob_x": 0.3607,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.677,
+          "percentage_str": "67%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T07:07:11.960774Z",
+      "result": "X",
+      "source": "dice",
+      "dice": [
+        2,
+        3,
+        4
+      ],
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.4879,
+        "prob_x": 0.3275,
+        "top_pattern": {
+          "name": "Cầu 1-2",
+          "detail": "Nhịp 1-2",
+          "prob": 0.256,
+          "percentage_str": "25%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T07:07:29.875964Z",
+      "result": "T",
+      "source": "dice",
+      "dice": [
+        3,
+        4,
+        5
+      ],
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.3616,
+        "prob_x": 0.6384,
+        "top_pattern": {
+          "name": "Bệt Xỉu (3+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.603,
+          "percentage_str": "60%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T07:07:38.824841Z",
+      "result": "X",
+      "source": "dice",
+      "dice": [
+        4,
+        5,
+        1
+      ],
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.2153,
+        "prob_x": 0.7847,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Xong nhịp 3-1",
+          "prob": 1.0,
+          "percentage_str": "99%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T07:07:49.750771Z",
+      "result": "T",
+      "source": "dice",
+      "dice": [
+        6,
+        4,
+        1
+      ],
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.4946,
+        "prob_x": 0.4258,
+        "top_pattern": {
+          "name": "Cầu 3-1",
+          "detail": "Chờ nhịp 3",
+          "prob": 0.327,
+          "percentage_str": "32%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T07:08:03.455087Z",
+      "result": "X",
+      "source": "dice",
+      "dice": [
+        2,
+        2,
+        5
+      ],
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5128,
+        "prob_x": 0.4872,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.666,
+          "percentage_str": "66%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T08:14:39.443140Z",
+      "result": "X",
+      "source": "dice",
+      "dice": [
+        2,
+        3,
+        5
+      ],
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6931,
+        "prob_x": 0.3069,
+        "top_pattern": {
+          "name": "Cầu 1-1 (Ping Pong)",
+          "detail": "Đang xen kẽ T/X liên tục",
+          "prob": 0.67,
+          "percentage_str": "67%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T08:14:48.720530Z",
+      "result": "T",
+      "source": "dice",
+      "dice": [
+        6,
+        5,
+        4
+      ],
+      "prediction": {
+        "suggest": "X",
+        "prob_t": 0.341,
+        "prob_x": 0.659,
+        "top_pattern": {
+          "name": "Bệt Xỉu (2+)",
+          "detail": "Đang theo xu hướng X",
+          "prob": 0.267,
+          "percentage_str": "26%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T08:15:04.670469Z",
+      "result": "T",
+      "source": "dice",
+      "dice": [
+        4,
+        4,
+        4
+      ],
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6199,
+        "prob_x": 0.3801,
+        "top_pattern": {
+          "name": "Cầu 2-2 (Nhịp đôi)",
+          "detail": "Chờ hoàn thành nhịp 2",
+          "prob": 0.337,
+          "percentage_str": "33%",
+          "expected": "T"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T08:15:14.456536Z",
+      "result": "X",
+      "source": "dice",
+      "dice": [
+        1,
+        2,
+        3
+      ],
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.6186,
+        "prob_x": 0.3813,
+        "top_pattern": {
+          "name": "Cầu 2-2 (Nhịp đôi)",
+          "detail": "Nhịp đôi đều đặn",
+          "prob": 0.4,
+          "percentage_str": "40%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    },
+    {
+      "ts": "2026-04-01T08:26:18.838264Z",
+      "result": "X",
+      "source": "dice",
+      "dice": [
+        3,
+        3,
+        3
+      ],
+      "prediction": {
+        "suggest": "T",
+        "prob_t": 0.5594,
+        "prob_x": 0.4406,
+        "top_pattern": {
+          "name": "Cầu 2-2 (Nhịp đôi)",
+          "detail": "Chờ hoàn thành nhịp 2",
+          "prob": 0.402,
+          "percentage_str": "40%",
+          "expected": "X"
+        },
+        "confirmed": false,
+        "was_correct": null
+      }
+    }
+  ],
+  "pattern_weights": {}
+}
