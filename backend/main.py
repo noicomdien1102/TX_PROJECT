@@ -1,5 +1,4 @@
 import json
-import math
 import os
 import re
 import datetime
@@ -12,9 +11,9 @@ from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-# ─── App Setup ──────────────────────────────────────────────────────────────
+# ─── App Setup ───────────────────────────────────────────────────────────────
 
-app = FastAPI(title="TX Prediction Engine", version="2.0.0")
+app = FastAPI(title="TX Prediction Engine", version="2.1.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -25,906 +24,696 @@ app.add_middleware(
 )
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
-if os.environ.get("VERCEL") == "1":
-    DATA_DIR = "/tmp/data"
 os.makedirs(DATA_DIR, exist_ok=True)
 
-# ─── Data Models ────────────────────────────────────────────────────────────
+DEFAULT_SESSION = "default"
+
+# ─── Cầu còn lại sau khi lọc ─────────────────────────────────────────────────
+# GIỮ (4 cầu cốt lõi):
+#   Cầu 1-1 (Ping Pong), Cầu 2-2 (Nhịp đôi), Bệt T/X, Cầu Bẻ Giả
+# CÓ ĐIỀU KIỆN - chỉ dùng khi xuất hiện đủ MIN_FREQ lần:
+#   Cầu 3-1, Cầu 1-3, Cầu Tăng Dần (1-2-3), Cầu Giảm Dần (3-2-1), Cầu 2-1-2-1
+# ĐÃ BỎ (5 cầu nhiễu):
+#   Cầu 1-2, Cầu 2-1       -> quá ngắn, fire liên tục, không đặc hiệu
+#   Cầu 2-4/4-2             -> quá hiếm, không đủ mẫu thống kê
+#   Cầu 3-4/4-3             -> quá hiếm, không đủ mẫu thống kê
+#   Cầu 2-5-2-4             -> cực hiếm, multiplier 12.0 gây lệch nặng
+#   Cầu Double Bệt          -> logic trùng hoàn toàn với Bệt + Fake Break
+
+MIN_FREQ: dict[str, int] = {
+    "Cầu 3-1":                5,
+    "Cầu 1-3":                5,
+    "Cầu Tăng Dần (1-2-3)":  3,
+    "Cầu Giảm Dần (3-2-1)":  3,
+    "Cầu 2-1-2-1 (Lặp lệch)": 2,
+}
+
+# ─── Data Models ─────────────────────────────────────────────────────────────
 
 class DiceInput(BaseModel):
     d1: int
     d2: int
     d3: int
-    session_id: str = "default"
+    session_id: str = DEFAULT_SESSION
 
 class ManualInput(BaseModel):
     result: str
-    session_id: str = "default"
+    session_id: str = DEFAULT_SESSION
 
 class ConfirmInput(BaseModel):
-    actual: str           # "T" or "X"
-    session_id: str = "default"
+    actual: str
+    session_id: str = DEFAULT_SESSION
 
 class CreateSessionInput(BaseModel):
     session_id: str
     description: str = ""
 
-# ─── Session I/O ────────────────────────────────────────────────────────────
+# ─── Session I/O ─────────────────────────────────────────────────────────────
 
-def _safe_session_id(session_id: str) -> str:
-    """Sanitise to filesystem-safe characters."""
+def _safe_id(session_id: str) -> str:
     return re.sub(r"[^a-zA-Z0-9_\-]", "_", session_id)[:64]
 
-
 def _session_path(session_id: str) -> str:
-    safe = _safe_session_id(session_id)
-    return os.path.join(DATA_DIR, f"session_{safe}.json")
-
+    return os.path.join(DATA_DIR, f"session_{_safe_id(session_id)}.json")
 
 def load_session(session_id: str) -> dict:
     path = _session_path(session_id)
     if not os.path.exists(path):
-        return {
-            "session_id": session_id,
-            "description": "",
-            "history": [],
-            "pattern_weights": {},
-        }
-    with open(path, "r") as f:
+        return {"session_id": session_id, "description": "", "history": [], "pattern_weights": {}}
+    with open(path) as f:
         try:
             return json.load(f)
         except json.JSONDecodeError:
-            return {
-                "session_id": session_id,
-                "description": "",
-                "history": [],
-                "pattern_weights": {},
-            }
-
+            return {"session_id": session_id, "description": "", "history": [], "pattern_weights": {}}
 
 def save_session(session: dict):
-    path = _session_path(session["session_id"])
-    with open(path, "w") as f:
+    with open(_session_path(session["session_id"]), "w") as f:
         json.dump(session, f, indent=2, ensure_ascii=False)
 
-
-# ─── History Schema Helpers ──────────────────────────────────────────────────
-
-def _make_prediction_snapshot(history: list[dict], sequence: list[str], pattern_weights: dict) -> dict:
-    """Compute the prediction snapshot before appending the new entry."""
-    if len(sequence) < 3:
-        return {
-            "suggest": None,
-            "prob_t": None,
-            "prob_x": None,
-            "top_pattern": None,
-            "confirmed": False,
-            "was_correct": None,
-        }
-    probs = advanced_predict(sequence)
-    top_patterns = detect_top_patterns(sequence, pattern_weights)
-    bias = detect_bias(history)
-    blend_w = compute_blend_weights(sequence, top_patterns)
-
-    if top_patterns:
-        # Rank-weighted blend: #1 pattern gets 60% say, #2 gets 25%, #3 gets 15%.
-        # This ensures the top (most confident) pattern is decisive even when
-        # multiple lower-ranked patterns oppose it from the other side.
-        _RANK_W = [0.60, 0.25, 0.15]
-        t_mass = sum(_RANK_W[i] for i, p in enumerate(top_patterns[:3]) if p["expected"] == "T")
-        x_mass = sum(_RANK_W[i] for i, p in enumerate(top_patterns[:3]) if p["expected"] == "X")
-        _total = t_mass + x_mass
-        if _total > 0:
-            t_mass /= _total
-            x_mass /= _total
-        pw = blend_w["pattern"]
-        mw = blend_w["markov"]
-        probs["T"] = round(probs["T"] * mw + t_mass * pw, 4)
-        probs["X"] = round(probs["X"] * mw + x_mass * pw, 4)
-
-    suggest = apply_bias_influence(probs, bias, history)
-    top_pattern = top_patterns[0] if top_patterns else None
-
-    return {
-        "suggest": suggest,
-        "prob_t": probs.get("T"),
-        "prob_x": probs.get("X"),
-        "top_pattern": top_pattern,
-        "confirmed": False,
-        "was_correct": None,
-    }
-
-
-def _make_entry(result: str, source: str, dice: Optional[list], prediction: dict) -> dict:
-    return {
-        "ts": datetime.datetime.utcnow().isoformat() + "Z",
-        "result": result,
-        "source": source,
-        "dice": dice,
-        "prediction": prediction,
-    }
-
-
-# ─── Accuracy ───────────────────────────────────────────────────────────────
-
-def compute_accuracy(history: list[dict]) -> dict:
-    confirmed = [h for h in history if h.get("prediction") and h["prediction"].get("confirmed")]
-    total = len(confirmed)
-    if total == 0:
-        return {"total_confirmed": 0, "accuracy_last_20": None, "accuracy_last_50": None,
-                "accuracy_last_100": None, "accuracy_all": None}
-
-    def _acc(entries):
-        if not entries:
-            return None
-        correct = sum(1 for e in entries if e["prediction"].get("was_correct"))
-        return round(correct / len(entries) * 100, 2)
-
-    return {
-        "total_confirmed": total,
-        "accuracy_last_20": _acc(confirmed[-20:]),
-        "accuracy_last_50": _acc(confirmed[-50:]),
-        "accuracy_last_100": _acc(confirmed[-100:]),
-        "accuracy_all": _acc(confirmed),
-    }
-
-
-# ─── Dynamic Blend Weights ───────────────────────────────────────────────────
-
-def compute_blend_weights(sequence: list[str], top_patterns: list[dict]) -> dict:
-    n = len(sequence)
-    if n < 20:
-        base = 0.20
-    elif n < 50:
-        base = 0.40
-    elif n < 100:
-        base = 0.55
-    else:
-        base = 0.65
-
-    if not top_patterns:
-        base -= 0.15
-    else:
-        top_prob = top_patterns[0]["prob"]
-        if top_prob >= 0.70:
-            base += 0.15
-        elif top_prob >= 0.60:
-            base += 0.08
-
-    pattern_w = max(0.20, min(0.80, base))
-    markov_w = round(1.0 - pattern_w, 4)
-    return {"markov": round(markov_w, 4), "pattern": round(pattern_w, 4)}
-
-
-# ─── Image Processing ───────────────────────────────────────────────────────
+# ─── Image Processing ────────────────────────────────────────────────────────
 
 def process_grid_image(file_bytes: bytes) -> tuple[list[str], list[dict], list[dict]]:
-    """Decode image, auto-crop padding, resize to 1000x250, split into 20x5 grid.
-    Read in snake pattern. Safely detect T (Black) or X (White) by darkest pixels.
-    Returns (results, debug_log, low_confidence_cells)."""
     nparr = np.frombuffer(file_bytes, np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_GRAYSCALE)
     if img is None:
-        raise ValueError("Cannot decode image")
+        raise ValueError("Không thể đọc ảnh. Kiểm tra định dạng file.")
 
-    # 1. Auto-Crop padding
     _, thresh_bright = cv2.threshold(img, 150, 255, cv2.THRESH_BINARY)
     edges = cv2.Canny(img, 50, 150)
     mask = cv2.bitwise_or(thresh_bright, edges)
-
     y_coords, x_coords = np.where(mask > 0)
-    if len(y_coords) > 0 and len(x_coords) > 0:
-        y1_crop = max(0, np.min(y_coords) - 5)
-        y2_crop = min(img.shape[0], np.max(y_coords) + 5)
-        x1_crop = max(0, np.min(x_coords) - 5)
-        x2_crop = min(img.shape[1], np.max(x_coords) + 5)
-        img = img[y1_crop:y2_crop, x1_crop:x2_crop]
+    if len(y_coords) > 0:
+        img = img[
+            max(0, int(np.min(y_coords)) - 5): min(img.shape[0], int(np.max(y_coords)) + 5),
+            max(0, int(np.min(x_coords)) - 5): min(img.shape[1], int(np.max(x_coords)) + 5),
+        ]
 
-    # 2. Extract cells
     img_resized = cv2.resize(img, (1000, 250), interpolation=cv2.INTER_AREA)
-
     cells_data = []
     for col in range(20):
-        rows = range(5) if col % 2 == 0 else range(4, -1, -1)
-        for row in rows:
-            y1 = row * 50 + 10
-            y2 = row * 50 + 40
-            x1 = col * 50 + 10
-            x2 = col * 50 + 40
-            cell_core = img_resized[y1:y2, x1:x2]
-            sorted_pixels = np.sort(cell_core.flatten())
-            dark_mean = float(np.mean(sorted_pixels[:100]))
+        for row in (range(5) if col % 2 == 0 else range(4, -1, -1)):
+            cell = img_resized[row*50+10:row*50+40, col*50+10:col*50+40]
+            dark_mean = float(np.mean(np.sort(cell.flatten())[:100]))
             cells_data.append({"col": col, "row": row, "dark_mean": dark_mean})
 
-    # Dynamic Thresholding
-    all_dark_means = [c["dark_mean"] for c in cells_data]
-    min_p5 = float(np.percentile(all_dark_means, 5))
-    max_p95 = float(np.percentile(all_dark_means, 95))
+    all_dm  = [c["dark_mean"] for c in cells_data]
+    min_p5  = float(np.percentile(all_dm, 5))
+    max_p95 = float(np.percentile(all_dm, 95))
     threshold = (min_p5 + max_p95) / 2
+    margin    = (max_p95 - min_p5) * 0.15
 
-    # Image confidence margin (change 7 – low-confidence cells)
-    margin = (max_p95 - min_p5) * 0.15
-
-    results: list[str] = []
-    debug_log: list[dict] = []
-    low_confidence_cells: list[dict] = []
-
+    results, debug_log, low_conf = [], [], []
     for c in cells_data:
-        res_val = "T" if c["dark_mean"] < threshold else "X"
-        results.append(res_val)
-        is_low = abs(c["dark_mean"] - threshold) < margin
-
+        val = "T" if c["dark_mean"] < threshold else "X"
+        low = abs(c["dark_mean"] - threshold) < margin
+        results.append(val)
         entry = {
             "time_idx": len(results) - 1,
-            "col": c["col"],
-            "row": c["row"],
+            "col": c["col"], "row": c["row"],
             "dark_mean": round(c["dark_mean"], 1),
-            "result": res_val,
-            "confidence": "low" if is_low else "ok",
+            "result": val,
+            "confidence": "low" if low else "ok",
         }
         debug_log.append(entry)
-        if is_low:
-            low_confidence_cells.append(entry)
+        if low:
+            low_conf.append(entry)
 
-    return results, debug_log, low_confidence_cells
+    return results, debug_log, low_conf
 
-
-# ─── Dice Logic ─────────────────────────────────────────────────────────────
+# ─── Dice ────────────────────────────────────────────────────────────────────
 
 def dice_to_result(d1: int, d2: int, d3: int) -> str:
-    total = d1 + d2 + d3
-    return "T" if total >= 11 else "X"
+    return "T" if (d1 + d2 + d3) >= 11 else "X"
 
+# ─── Accuracy ────────────────────────────────────────────────────────────────
 
-# ─── Advanced Run-Length Predictor ──────────────────────────────────────────
+def compute_accuracy(history: list[dict]) -> dict:
+    confirmed = [
+        h for h in history
+        if h.get("prediction", {}).get("confirmed")
+        and h["prediction"].get("suggest") is not None
+    ]
+    def _acc(entries):
+        if not entries:
+            return None
+        return round(sum(1 for e in entries if e["prediction"].get("was_correct")) / len(entries) * 100, 2)
+    return {
+        "total_confirmed":   len(confirmed),
+        "accuracy_last_20":  _acc(confirmed[-20:]),
+        "accuracy_last_50":  _acc(confirmed[-50:]),
+        "accuracy_last_100": _acc(confirmed[-100:]),
+        "accuracy_all":      _acc(confirmed),
+    }
+
+# ─── Dynamic Blend Weights ────────────────────────────────────────────────────
+
+def compute_blend_weights(sequence: list[str], top_patterns: list[dict]) -> dict:
+    n = len(sequence)
+    base = 0.20 if n < 20 else 0.40 if n < 50 else 0.55 if n < 100 else 0.65
+    if not top_patterns:
+        base -= 0.15
+    else:
+        tp = top_patterns[0]["prob"]
+        base += 0.15 if tp >= 0.70 else 0.08 if tp >= 0.60 else 0.0
+    pw = max(0.20, min(0.80, base))
+    return {"markov": round(1.0 - pw, 4), "pattern": round(pw, 4)}
+
+# ─── Run-Length Predictor ────────────────────────────────────────────────────
 
 def advanced_predict(sequence: list[str]) -> dict:
-    """Predict based on Run-Length Continuation historical frequency + Momentum."""
     if len(sequence) < 3:
         return {"T": 0.5, "X": 0.5}
 
-    current_val = sequence[-1]
-    other_val = "X" if current_val == "T" else "T"
+    cur_val   = sequence[-1]
+    other_val = "X" if cur_val == "T" else "T"
 
     streak_len = 1
     for v in reversed(sequence[:-1]):
-        if v == current_val:
-            streak_len += 1
-        else:
-            break
+        if v == cur_val: streak_len += 1
+        else: break
 
-    hist_runs = []
-    cur, cnt = sequence[0], 1
+    hist_runs, cur, cnt = [], sequence[0], 1
     for v in sequence[1:]:
-        if v == cur:
-            cnt += 1
+        if v == cur: cnt += 1
         else:
-            if cur == current_val:
-                hist_runs.append(cnt)
+            if cur == cur_val: hist_runs.append(cnt)
             cur, cnt = v, 1
 
-    reached_len = [r for r in hist_runs if r >= streak_len]
-    continued = sum(1 for r in reached_len if r > streak_len)
-    broken = sum(1 for r in reached_len if r == streak_len)
+    reached   = [r for r in hist_runs if r >= streak_len]
+    continued = sum(1 for r in reached if r > streak_len)
+    broken    = sum(1 for r in reached if r == streak_len)
+    p_cont    = (continued + 1.0) / (continued + broken + 2.0)
+    p_broke   = (broken    + 1.0) / (continued + broken + 2.0)
 
-    prob_cont = (continued + 1.0) / (continued + broken + 2.0)
-    prob_broke = (broken + 1.0) / (continued + broken + 2.0)
+    recent      = sequence[-20:] if len(sequence) >= 20 else sequence
+    final_cont  = p_cont  * 0.7 + recent.count(cur_val)   / len(recent) * 0.3
+    final_broke = p_broke * 0.7 + recent.count(other_val) / len(recent) * 0.3
+    total = final_cont + final_broke
 
-    recent = sequence[-20:] if len(sequence) >= 20 else sequence
-    recent_current_val_ratio = recent.count(current_val) / len(recent)
-    recent_other_val_ratio = recent.count(other_val) / len(recent)
+    return {cur_val: round(final_cont/total, 4), other_val: round(final_broke/total, 4)}
 
-    final_prob_cont = prob_cont * 0.7 + recent_current_val_ratio * 0.3
-    final_prob_broke = prob_broke * 0.7 + recent_other_val_ratio * 0.3
+# ─── Pattern Engine ───────────────────────────────────────────────────────────
 
-    total = final_prob_cont + final_prob_broke
-    p_current = final_prob_cont / total
-    p_other = final_prob_broke / total
-
-    return {
-        current_val: round(p_current, 4),
-        other_val: round(p_other, 4)
-    }
-
-
-# ─── Pattern Probability Engine ─────────────────────────────────────────────
-
-def _score_pattern_tail_match(pattern_name: str, r: list[int], current_val: str) -> tuple[float, str, str]:
-    """Evaluate how well the current tail matches the pattern and returning (Multiplier, ExpectedNext, Detail)."""
-    switch = "X" if current_val == "T" else "T"
-    cont = current_val
-
-    if len(r) == 0:
+def _score_pattern_tail(name: str, r: list[int], cur: str) -> tuple[float, str, str]:
+    sw   = "X" if cur == "T" else "T"
+    cont = cur
+    if not r:
         return 0.0, cont, ""
 
-    if pattern_name == "Cầu 1-1 (Ping Pong)":
-        if len(r) >= 6 and all(x == 1 for x in r[-6:]): return 6.0, switch, "Ping pong quá dài (Chuẩn bị gãy)"
-        if len(r) >= 3 and r[-1] == 1 and r[-2] == 1 and r[-3] == 1: return 10.0, switch, "Đang xen kẽ T/X liên tục"
-        if len(r) >= 2 and r[-1] == 1 and r[-2] == 1: return 3.0, switch, "Dấu hiệu Cầu 1-1"
-        return 0.0, switch, ""
+    if name == "Cầu 1-1 (Ping Pong)":
+        if len(r) >= 6 and all(x == 1 for x in r[-6:]): return 6.0,  sw,   "Ping pong quá dài — chuẩn bị gãy"
+        if len(r) >= 3 and r[-3]==1 and r[-2]==1 and r[-1]==1:  return 10.0, sw,   "Đang xen kẽ T/X liên tục"
+        if len(r) >= 2 and r[-2]==1 and r[-1]==1:               return 3.0,  sw,   "Dấu hiệu cầu 1-1"
+        return 0.0, sw, ""
 
-    if pattern_name == "Cầu 2-2 (Nhịp đôi)":
-        if len(r) >= 2 and r[-2] == 2 and r[-1] == 2: return 8.0, switch, "Nhịp đôi đều đặn"
-        if len(r) >= 3 and r[-3] == 2 and r[-2] == 2 and r[-1] == 1: return 10.0, cont, "Chờ hoàn thành nhịp 2"
-        # Raised from 4.0 → 7.0 so 2-2 beats Cầu 2-1 (5.0) when both fire on tail [2,1]
-        if len(r) >= 2 and r[-2] == 2 and r[-1] == 1: return 7.0, cont, "Chờ hoàn thành nhịp 2"
-        return 0.0, cont, ""
-
-    if pattern_name == "Cầu 2-1-2-1 (Lặp lệch)":
-        if len(r) >= 3 and r[-3] == 2 and r[-2] == 1 and r[-1] == 2: return 10.0, switch, "Vừa nhịp 2, chờ 1"
-        if len(r) >= 4 and r[-4] == 2 and r[-3] == 1 and r[-2] == 2 and r[-1] == 1: return 9.0, cont, "Vừa nhịp 1, chờ 2"
+    if name == "Cầu 2-2 (Nhịp đôi)":
+        if len(r) >= 2 and r[-2]==2 and r[-1]==2:               return 8.0,  sw,   "Nhịp đôi đều đặn"
+        if len(r) >= 3 and r[-3]==2 and r[-2]==2 and r[-1]==1:  return 10.0, cont, "Chờ hoàn thành nhịp 2"
+        if len(r) >= 2 and r[-2]==2 and r[-1]==1:               return 7.0,  cont, "Chờ hoàn thành nhịp 2"
         return 0.0, cont, ""
 
-    if pattern_name == "Cầu Tăng Dần (1-2-3)":
-        if len(r) >= 2 and r[-2] == 1 and r[-1] == 2: return 6.0, switch, "Nhịp 1-2 xong, xả bẻ sang 3"
-        if len(r) >= 3 and r[-3] == 1 and r[-2] == 2 and r[-1] == 1: return 8.0, cont, "Đang lên nhịp 3"
-        if len(r) >= 3 and r[-3] == 1 and r[-2] == 2 and r[-1] == 2: return 9.0, cont, "Đang lên nhịp 3"
-        if len(r) >= 3 and r[-3] == 1 and r[-2] == 2 and r[-1] == 3: return 8.0, switch, "Hoàn thành 1-2-3, xả cầu"
+    if name == "Cầu 2-1-2-1 (Lặp lệch)":
+        # Đã hoàn chỉnh — tín hiệu mạnh
+        if len(r) >= 4 and r[-4]==2 and r[-3]==1 and r[-2]==2 and r[-1]==1: return 9.0,  cont, "Vừa nhịp 1, chờ 2"
+        if len(r) >= 3 and r[-3]==2 and r[-2]==1 and r[-1]==2:              return 10.0, sw,   "Vừa nhịp 2, chờ 1"
+        # Đang hình thành — chỉ fire vì history đã có pattern này (MIN_FREQ=2 đã lọc)
+        if len(r) >= 2 and r[-2]==2 and r[-1]==1: return 5.0, cont, "Nhịp 2-1 — chờ lặp lại"
+        if len(r) >= 2 and r[-2]==1 and r[-1]==2: return 5.0, sw,   "Nhịp 1-2 — chờ lặp lại"
         return 0.0, cont, ""
 
-    if pattern_name == "Cầu Giảm Dần (3-2-1)":
-        if len(r) >= 2 and r[-2] == 3 and r[-1] == 2: return 8.0, switch, "Nhịp 3-2 xong, bắt nhịp 1"
-        if len(r) >= 3 and r[-3] == 3 and r[-2] == 2 and r[-1] == 1: return 8.0, switch, "Hoàn thành 3-2-1, xả cầu"
+    if name == "Cầu Tăng Dần (1-2-3)":
+        if len(r) >= 2 and r[-2]==1 and r[-1]==2:               return 6.0,  sw,   "Nhịp 1-2 xong, xả bẻ sang 3"
+        if len(r) >= 3 and r[-3]==1 and r[-2]==2 and r[-1]==1:  return 8.0,  cont, "Đang lên nhịp 3"
+        if len(r) >= 3 and r[-3]==1 and r[-2]==2 and r[-1]==2:  return 9.0,  cont, "Đang lên nhịp 3"
+        if len(r) >= 3 and r[-3]==1 and r[-2]==2 and r[-1]==3:  return 8.0,  sw,   "Hoàn thành 1-2-3, xả cầu"
         return 0.0, cont, ""
 
-    if pattern_name == "Cầu Bẻ Giả (Fake Break)":
-        if len(r) >= 3 and r[-3] >= 3 and r[-2] == 1 and r[-1] == 1: return 8.0, cont, "Dấu hiệu bẻ giả, trở lại Bệt"
-        if len(r) >= 3 and r[-3] >= 3 and r[-2] == 1 and r[-1] >= 2: return 10.0, cont, "Bẻ giả thành công, tiếp tục Bệt"
+    if name == "Cầu Giảm Dần (3-2-1)":
+        if len(r) >= 2 and r[-2]==3 and r[-1]==2:               return 8.0, sw,   "Nhịp 3-2 xong, bắt nhịp 1"
+        if len(r) >= 3 and r[-3]==3 and r[-2]==2 and r[-1]==1:  return 8.0, sw,   "Hoàn thành 3-2-1, xả cầu"
         return 0.0, cont, ""
 
-    if pattern_name == "Cầu 2-4 / 4-2":
-        if len(r) >= 2 and r[-2] == 2 and r[-1] == 3: return 8.0, cont, "Đang dồn nhịp 4"
-        if len(r) >= 2 and r[-2] == 2 and r[-1] == 4: return 8.0, switch, "Hoàn thành 2-4"
-        if len(r) >= 2 and r[-2] == 4 and r[-1] == 1: return 8.0, cont, "Đang xuống nhịp 2"
-        if len(r) >= 2 and r[-2] == 4 and r[-1] == 2: return 8.0, switch, "Hoàn thành 4-2"
+    if name == "Cầu Bẻ Giả (Fake Break)":
+        if len(r) >= 3 and r[-3]>=3 and r[-2]==1 and r[-1]==1:  return 8.0,  cont, "Dấu hiệu bẻ giả, trở lại Bệt"
+        if len(r) >= 3 and r[-3]>=3 and r[-2]==1 and r[-1]>=2:  return 10.0, cont, "Bẻ giả thành công, tiếp tục Bệt"
         return 0.0, cont, ""
 
-    if pattern_name == "Cầu 3-4 / 4-3":
-        if len(r) >= 2 and r[-2] == 3 and r[-1] == 3: return 8.0, cont, "Đang dồn nhịp 4"
-        if len(r) >= 2 and r[-2] == 3 and r[-1] == 4: return 8.0, switch, "Hoàn thành 3-4"
-        if len(r) >= 2 and r[-2] == 4 and r[-1] == 2: return 8.0, cont, "Đang xuống nhịp 3"
-        if len(r) >= 2 and r[-2] == 4 and r[-1] == 3: return 8.0, switch, "Hoàn thành 4-3"
+    if name == "Cầu 3-1":
+        if len(r) >= 2 and r[-2]==3 and r[-1]==1:               return 8.0, sw,   "Xong nhịp 3-1"
+        if len(r) >= 3 and r[-3]==3 and r[-2]==1 and r[-1]<=2:  return 8.0, cont, "Chờ nhịp 3"
         return 0.0, cont, ""
 
-    if pattern_name == "Cầu 2-5-2-4":
-        if len(r) >= 4 and r[-4] == 2 and r[-3] == 5 and r[-2] == 2 and r[-1] <= 3: return 12.0, cont, "Chờ nhịp 4 cuối của 2-5-2-4"
-        if len(r) >= 4 and r[-4] == 2 and r[-3] == 5 and r[-2] == 2 and r[-1] == 4: return 10.0, switch, "Hoàn thành 2-5-2-4"
-        return 0.0, cont, ""
-
-    if pattern_name == "Cầu Double Bệt (Bệt Đối Xứng)":
-        if len(r) >= 2 and r[-2] >= 3 and r[-1] >= 2 and r[-1] < r[-2]: return 6.0, cont, "Cân bệt trước đó"
-        if len(r) >= 2 and r[-2] >= 3 and r[-1] == r[-2]: return 8.0, switch, "Đã cân xong 2 bệt"
-        return 0.0, cont, ""
-
-    if pattern_name == "Cầu 3-1":
-        if len(r) >= 2 and r[-2] == 3 and r[-1] == 1: return 8.0, switch, "Xong nhịp 3-1"
-        if len(r) >= 3 and r[-3] == 3 and r[-2] == 1 and r[-1] <= 2: return 8.0, cont, "Chờ nhịp 3"
-        return 0.0, cont, ""
-    if pattern_name == "Cầu 1-3":
-        if len(r) >= 2 and r[-2] == 1 and r[-1] == 3: return 8.0, switch, "Xong nhịp 1-3"
-        if len(r) >= 2 and r[-2] == 1 and r[-1] <= 2: return 6.0, cont, "Chờ nhịp 3"
-        return 0.0, cont, ""
-    if pattern_name == "Cầu 1-2" or pattern_name == "Cầu 2-1":
-        if len(r) >= 2 and r[-2] == 1 and r[-1] == 2: return 5.0, switch, "Nhịp 1-2"
-        if len(r) >= 2 and r[-2] == 2 and r[-1] == 1: return 5.0, switch, "Nhịp 2-1"
+    if name == "Cầu 1-3":
+        if len(r) >= 2 and r[-2]==1 and r[-1]==3:  return 8.0, sw,   "Xong nhịp 1-3"
+        if len(r) >= 2 and r[-2]==1 and r[-1]<=2:  return 6.0, cont, "Chờ nhịp 3"
         return 0.0, cont, ""
 
     return 0.0, cont, ""
 
 
 def detect_top_patterns(sequence: list[str], pattern_weights: Optional[dict] = None) -> list[dict]:
-    """Return top 3 pattern probabilities based on history freq + tail match + equilibrium.
-    Uses sequence[-30:] for T/X ratio check (rolling window equilibrium)."""
     if len(sequence) < 5:
         return []
-
     if pattern_weights is None:
         pattern_weights = {}
 
-    # Change 6 – Rolling window equilibrium: use last 30 entries for ratio check
-    window = sequence[-30:]
-    t_count = window.count("T")
-    x_count = window.count("X")
-    t_ratio = t_count / len(window)
-    x_ratio = x_count / len(window)
+    window  = sequence[-30:]
+    t_ratio = window.count("T") / len(window)
+    x_ratio = window.count("X") / len(window)
 
-    # Convert history into runs
     runs: list[tuple[str, int]] = []
     cur, cnt = sequence[0], 1
     for v in sequence[1:]:
-        if v == cur:
-            cnt += 1
+        if v == cur: cnt += 1
         else:
             runs.append((cur, cnt))
             cur, cnt = v, 1
     runs.append((cur, cnt))
-    run_lengths = [r[1] for r in runs]
+    rl = [r[1] for r in runs]
 
     hist_freq = {
-        "Cầu 1-1 (Ping Pong)": sum(1 for i in range(len(run_lengths) - 2) if run_lengths[i:i+3] == [1, 1, 1]),
-        "Cầu 2-2 (Nhịp đôi)": sum(1 for i in range(len(run_lengths) - 1) if run_lengths[i:i+2] == [2, 2]),
-        "Cầu 3-1": sum(1 for i in range(len(run_lengths) - 1) if run_lengths[i:i+2] == [3, 1]),
-        "Cầu 1-3": sum(1 for i in range(len(run_lengths) - 1) if run_lengths[i:i+2] == [1, 3]),
-        "Cầu 1-2": sum(1 for i in range(len(run_lengths) - 1) if run_lengths[i:i+2] == [1, 2]),
-        "Cầu 2-1": sum(1 for i in range(len(run_lengths) - 1) if run_lengths[i:i+2] == [2, 1]),
-        "Cầu 2-1-2-1 (Lặp lệch)": sum(1 for i in range(len(run_lengths) - 3) if run_lengths[i:i+4] == [2, 1, 2, 1]),
-        "Cầu Tăng Dần (1-2-3)": sum(1 for i in range(len(run_lengths) - 2) if run_lengths[i:i+3] == [1, 2, 3]),
-        "Cầu Giảm Dần (3-2-1)": sum(1 for i in range(len(run_lengths) - 2) if run_lengths[i:i+3] == [3, 2, 1]),
-        "Cầu Bẻ Giả (Fake Break)": sum(1 for i in range(len(run_lengths) - 2) if run_lengths[i] >= 3 and run_lengths[i+1] == 1 and run_lengths[i+2] >= 3),
-        "Cầu 2-4 / 4-2": sum(1 for i in range(len(run_lengths) - 1) if run_lengths[i:i+2] in ([2, 4], [4, 2])),
-        "Cầu 3-4 / 4-3": sum(1 for i in range(len(run_lengths) - 1) if run_lengths[i:i+2] in ([3, 4], [4, 3])),
-        "Cầu 2-5-2-4": sum(1 for i in range(len(run_lengths) - 3) if run_lengths[i:i+4] == [2, 5, 2, 4]),
-        "Cầu Double Bệt (Bệt Đối Xứng)": sum(1 for i in range(len(run_lengths) - 1) if run_lengths[i] >= 3 and run_lengths[i+1] >= 3)
+        "Cầu 1-1 (Ping Pong)":     sum(1 for i in range(len(rl)-2) if rl[i:i+3]==[1,1,1]),
+        "Cầu 2-2 (Nhịp đôi)":      sum(1 for i in range(len(rl)-1) if rl[i:i+2]==[2,2]),
+        "Cầu 3-1":                  sum(1 for i in range(len(rl)-1) if rl[i:i+2]==[3,1]),
+        "Cầu 1-3":                  sum(1 for i in range(len(rl)-1) if rl[i:i+2]==[1,3]),
+        "Cầu 2-1-2-1 (Lặp lệch)":  sum(1 for i in range(len(rl)-3) if rl[i:i+4]==[2,1,2,1]),
+        "Cầu Tăng Dần (1-2-3)":    sum(1 for i in range(len(rl)-2) if rl[i:i+3]==[1,2,3]),
+        "Cầu Giảm Dần (3-2-1)":    sum(1 for i in range(len(rl)-2) if rl[i:i+3]==[3,2,1]),
+        "Cầu Bẻ Giả (Fake Break)": sum(1 for i in range(len(rl)-2) if rl[i]>=3 and rl[i+1]==1 and rl[i+2]>=3),
     }
 
-    bet_t_freq = sum(1 for r in runs[:-1] if r[0] == "T" and r[1] >= 3)
-    bet_x_freq = sum(1 for r in runs[:-1] if r[0] == "X" and r[1] >= 3)
+    bet_t = sum(1 for r in runs[:-1] if r[0]=="T" and r[1]>=3)
+    bet_x = sum(1 for r in runs[:-1] if r[0]=="X" and r[1]>=3)
+    max_t = max([r[1] for r in runs[:-1] if r[0]=="T"] + [0])
+    max_x = max([r[1] for r in runs[:-1] if r[0]=="X"] + [0])
 
-    max_streak_t = max([r[1] for r in runs[:-1] if r[0] == "T"] + [0])
-    max_streak_x = max([r[1] for r in runs[:-1] if r[0] == "X"] + [0])
-
-    current_val = sequence[-1]
+    cur_val    = sequence[-1]
     streak_len = runs[-1][1]
-
     candidates = []
 
-    # Evaluate Standard Patterns — Change 5: multiply raw_score by pattern_weight
-    for p_name, base_count in hist_freq.items():
-        multiplier, exp, detail = _score_pattern_tail_match(p_name, run_lengths, current_val)
-        if multiplier > 0:
-            raw_score = (base_count + 1) * multiplier
-            weight = pattern_weights.get(p_name, 1.0)
-            raw_score *= weight
-            candidates.append({"name": p_name, "raw_score": raw_score, "expected": exp, "detail": detail})
+    for p_name, freq in hist_freq.items():
+        if freq < MIN_FREQ.get(p_name, 1):
+            continue
+        mult, expected, detail = _score_pattern_tail(p_name, rl, cur_val)
+        if mult <= 0:
+            continue
+        raw = (freq + 1) * mult * pattern_weights.get(p_name, 1.0)
+        candidates.append({"name": p_name, "raw_score": raw, "expected": expected,
+                            "detail": detail, "freq": freq})
 
-    # Evaluate Bệt
-    if current_val == "T" and streak_len >= 2:
-        multiplier = 10.0 if streak_len >= 3 else 5.0
-        raw_score = (bet_t_freq + 1) * multiplier
+    if cur_val == "T" and streak_len >= 2:
+        mult   = 10.0 if streak_len >= 3 else 5.0
+        raw    = (bet_t + 1) * mult
         detail = "Đang theo xu hướng T"
-        if streak_len > max_streak_t and max_streak_t > 0:
-            raw_score *= 0.2
-            detail += " (Phá kỷ lục cũ - Báo động gãy)"
-        bk = f"Bệt Tài ({streak_len}+)"
-        weight = pattern_weights.get(bk, 1.0)
-        raw_score *= weight
-        candidates.append({"name": bk, "raw_score": raw_score, "expected": "T", "detail": detail})
-    elif current_val == "X" and streak_len >= 2:
-        multiplier = 10.0 if streak_len >= 3 else 5.0
-        raw_score = (bet_x_freq + 1) * multiplier
-        detail = "Đang theo xu hướng X"
-        if streak_len > max_streak_x and max_streak_x > 0:
-            raw_score *= 0.2
-            detail += " (Phá kỷ lục cũ - Báo động gãy)"
-        bk = f"Bệt Xỉu ({streak_len}+)"
-        weight = pattern_weights.get(bk, 1.0)
-        raw_score *= weight
-        candidates.append({"name": bk, "raw_score": raw_score, "expected": "X", "detail": detail})
+        if streak_len > max_t > 0:
+            raw *= 0.2; detail += " (Phá kỷ lục — cảnh báo gãy)"
+        bk   = f"Bệt Tài ({streak_len}+)"
+        raw *= pattern_weights.get(bk, 1.0)
+        candidates.append({"name": bk, "raw_score": raw, "expected": "T", "detail": detail, "freq": bet_t})
 
-    # ── Soft Priority Damping ────────────────────────────────────────
-    # When a longer/more-specific pattern is active, reduce overlapping shorter
-    # patterns' raw_score by 50% (keeps them visible in UI but prevents them
-    # from unfairly dominating the probability blend).
-    SOFT_PRIORITY: dict[str, set[str]] = {
-        "Cầu 2-2 (Nhịp đôi)":        {"Cầu 1-2", "Cầu 2-1"},
-        "Cầu 2-1-2-1 (Lặp lệch)":   {"Cầu 2-1", "Cầu 1-2"},
-        "Cầu Tăng Dần (1-2-3)":      {"Cầu 1-2", "Cầu 2-1"},
-        "Cầu Giảm Dần (3-2-1)":      {"Cầu 3-1"},
-        "Cầu 2-5-2-4":               {"Cầu 2-2 (Nhịp đôi)", "Cầu 2-4 / 4-2"},
+    elif cur_val == "X" and streak_len >= 2:
+        mult   = 10.0 if streak_len >= 3 else 5.0
+        raw    = (bet_x + 1) * mult
+        detail = "Đang theo xu hướng X"
+        if streak_len > max_x > 0:
+            raw *= 0.2; detail += " (Phá kỷ lục — cảnh báo gãy)"
+        bk   = f"Bệt Xỉu ({streak_len}+)"
+        raw *= pattern_weights.get(bk, 1.0)
+        candidates.append({"name": bk, "raw_score": raw, "expected": "X", "detail": detail, "freq": bet_x})
+
+    SOFT_PRIORITY = {
+        "Cầu 2-2 (Nhịp đôi)":   {"Cầu 2-1-2-1 (Lặp lệch)"},
+        "Cầu Tăng Dần (1-2-3)": {"Cầu 3-1"},
+        "Cầu Giảm Dần (3-2-1)": {"Cầu 3-1"},
     }
     present = {c["name"] for c in candidates}
-    for priority_pattern, damped_set in SOFT_PRIORITY.items():
-        if priority_pattern in present:
+    for priority, damped in SOFT_PRIORITY.items():
+        if priority in present:
             for c in candidates:
-                if c["name"] in damped_set:
-                    c["raw_score"] *= 0.5  # reduce, not remove
+                if c["name"] in damped:
+                    c["raw_score"] *= 0.5
 
-    # Apply equilibrium constraints (rolling window)
     for c in candidates:
         if c["expected"] == "T" and t_ratio > 0.65:
-            c["raw_score"] *= 0.1
-            c["detail"] += " (Bị ép giảm do Tỉ lệ T>65%)"
+            c["raw_score"] *= 0.1; c["detail"] += " (Nén: T >65% trong 30 ván gần)"
         if c["expected"] == "X" and x_ratio > 0.65:
-            c["raw_score"] *= 0.1
-            c["detail"] += " (Bị ép giảm do Tỉ lệ X>65%)"
+            c["raw_score"] *= 0.1; c["detail"] += " (Nén: X >65% trong 30 ván gần)"
 
     if not candidates:
         return []
 
-    total_score = sum(c["raw_score"] for c in candidates)
-    if total_score == 0:
-        return []
+    # Softmax thay K_NOISE — giữ thông tin confidence thực sự
+    TEMPERATURE = 2.0
+    scores = np.array([c["raw_score"] for c in candidates], dtype=float)
+    scores = scores / TEMPERATURE
+    scores -= scores.max()
+    exp_s  = np.exp(scores)
+    probs  = exp_s / exp_s.sum()
 
-    K_NOISE = total_score * 0.8
-    normalized_total = total_score + K_NOISE
-
-    for c in candidates:
-        base_noise_share = K_NOISE / len(candidates)
-        c["prob"] = round((c["raw_score"] + base_noise_share) / normalized_total, 3)
+    for i, c in enumerate(candidates):
+        c["prob"] = round(float(probs[i]), 4)
 
     candidates.sort(key=lambda x: x["prob"], reverse=True)
-    top_3 = candidates[:3]
 
-    results = []
-    for c in top_3:
-        percentage = min(99, int(c["prob"] * 100))
-        if percentage > 0:
-            results.append({
-                "name": c["name"],
-                "detail": c["detail"],
-                "prob": c["prob"],
-                "percentage_str": f"{percentage}%",
-                "expected": c["expected"],
-            })
+    return [
+        {
+            "name":           c["name"],
+            "detail":         c["detail"],
+            "prob":           c["prob"],
+            "percentage_str": f"{min(99, int(c['prob']*100))}%",
+            "expected":       c["expected"],
+            "freq":           c.get("freq", 0),
+        }
+        for c in candidates[:3] if int(c["prob"]*100) > 0
+    ]
 
-    return results
+# ─── Confidence Gate ─────────────────────────────────────────────────────────
 
+def compute_signal(probs: dict, top_patterns: list[dict], sequence: list[str]) -> tuple[Optional[str], str]:
+    """
+    3 tín hiệu độc lập bỏ phiếu.
+    Cần >= 2/3 đồng thuận mới output T/X.
+    Ngược chiều -> suggest=None (Không rõ cầu - bỏ ván này).
+    """
+    votes: list[str] = []
 
-# ─── Bias Detection ──────────────────────────────────────────────────────────
+    # Tín hiệu 1: Markov
+    markov_side = "T" if probs["T"] >= probs["X"] else "X"
+    if max(probs["T"], probs["X"]) >= 0.55:
+        votes.append(markov_side)
+
+    # Tín hiệu 2: Pattern
+    if top_patterns and top_patterns[0]["prob"] >= 0.55:
+        votes.append(top_patterns[0]["expected"])
+
+    # Tín hiệu 3: Momentum 20 ván gần
+    recent = sequence[-20:] if len(sequence) >= 20 else sequence
+    if recent:
+        tr = recent.count("T") / len(recent)
+        xr = recent.count("X") / len(recent)
+        if tr >= 0.60:   votes.append("T")
+        elif xr >= 0.60: votes.append("X")
+
+    if not votes:
+        return None, "none"
+
+    t_v = votes.count("T")
+    x_v = votes.count("X")
+
+    if t_v >= 2 and t_v > x_v:
+        return "T", ("strong" if t_v == 3 else "moderate")
+    if x_v >= 2 and x_v > t_v:
+        return "X", ("strong" if x_v == 3 else "moderate")
+
+    return None, "none"
+
+# ─── Bias ────────────────────────────────────────────────────────────────────
 
 def detect_bias(history: list[dict]) -> dict:
-    """Only for dice entries: flag any die face > 25% of appearances."""
     dice_entries = [h for h in history if h.get("source") == "dice" and h.get("dice")]
     if not dice_entries:
         return {"has_bias": False, "biased_faces": [], "face_pcts": {}}
+    fc: dict[int, int] = defaultdict(int)
+    total = 0
+    for e in dice_entries:
+        for d in e["dice"]:
+            fc[d] += 1; total += 1
+    face_pcts = {str(f): round(c/total*100, 1) for f, c in sorted(fc.items())}
+    biased = [f for f, c in fc.items() if c/total > 0.25]
+    return {"has_bias": bool(biased), "biased_faces": sorted(biased), "face_pcts": face_pcts}
 
-    face_count: dict[int, int] = defaultdict(int)
-    total_dice = 0
-    for entry in dice_entries:
-        for d in entry["dice"]:
-            face_count[d] += 1
-            total_dice += 1
-
-    face_pcts = {str(face): round(count / total_dice * 100, 1) for face, count in sorted(face_count.items())}
-    biased = [face for face, count in face_count.items() if count / total_dice > 0.25]
-
+def apply_bias(probs: dict, bias: dict) -> dict:
+    if not bias["has_bias"]:
+        return probs
+    high = [f for f in bias["biased_faces"] if f >= 4]
+    low  = [f for f in bias["biased_faces"] if f <= 3]
+    bt   = 0.85 if len(high) > len(low) else 0.15 if len(low) > len(high) else 0.5
     return {
-        "has_bias": len(biased) > 0,
-        "biased_faces": sorted(biased),
-        "face_pcts": face_pcts,
+        "T": round(probs["T"] * 0.7 + bt * 0.3, 4),
+        "X": round(probs["X"] * 0.7 + (1.0 - bt) * 0.3, 4),
     }
 
+# ─── Snapshot ────────────────────────────────────────────────────────────────
 
-# ─── Bias → Suggestion Influence ────────────────────────────────────────────
+def _make_snapshot(history: list[dict], sequence: list[str], pw: dict) -> dict:
+    null = {"suggest": None, "prob_t": None, "prob_x": None, "top_pattern": None,
+            "confirmed": False, "was_correct": None, "signal_strength": "none"}
+    if len(sequence) < 3:
+        return null
 
-def apply_bias_influence(probs: dict, bias: dict, history: list[dict]) -> str:
-    """If bias detected, shift the suggestion based on biased face value."""
-    base_suggest = "T" if probs["T"] >= probs["X"] else "X"
-    if not bias["has_bias"]:
-        return base_suggest
+    probs        = advanced_predict(sequence)
+    top_patterns = detect_top_patterns(sequence, pw)
+    bias         = detect_bias(history)
+    blend        = compute_blend_weights(sequence, top_patterns)
+    probs        = apply_bias(probs, bias)
 
-    biased_faces = bias["biased_faces"]
-    high = [f for f in biased_faces if f >= 4]
-    low = [f for f in biased_faces if f <= 3]
+    if top_patterns:
+        t_mass = sum(p["prob"] for p in top_patterns if p["expected"] == "T")
+        x_mass = sum(p["prob"] for p in top_patterns if p["expected"] == "X")
+        probs["T"] = round(probs["T"] * blend["markov"] + t_mass * blend["pattern"], 4)
+        probs["X"] = round(probs["X"] * blend["markov"] + x_mass * blend["pattern"], 4)
 
-    bias_t_prob = 0.5
-    if len(high) > len(low):
-        bias_t_prob = 0.85
-    elif len(low) > len(high):
-        bias_t_prob = 0.15
+    suggest, strength = compute_signal(probs, top_patterns, sequence)
+    return {
+        "suggest":         suggest,
+        "prob_t":          probs.get("T"),
+        "prob_x":          probs.get("X"),
+        "top_pattern":     top_patterns[0] if top_patterns else None,
+        "confirmed":       False,
+        "was_correct":     None,
+        "signal_strength": strength,
+    }
 
-    probs["T"] = round(probs["T"] * 0.7 + bias_t_prob * 0.3, 4)
-    probs["X"] = round(probs["X"] * 0.7 + (1.0 - bias_t_prob) * 0.3, 4)
+def _make_entry(result: str, source: str, dice: Optional[list], snap: dict) -> dict:
+    return {
+        "ts":         datetime.datetime.utcnow().isoformat() + "Z",
+        "result":     result,
+        "source":     source,
+        "dice":       dice,
+        "prediction": snap,
+    }
 
-    return "T" if probs["T"] >= probs["X"] else "X"
+# ─── Weight Tuning ───────────────────────────────────────────────────────────
 
+def _tune(weights: dict, name: str, correct: bool) -> dict:
+    w = weights.get(name, 1.0)
+    w = min(2.0, w * 1.05) if correct else max(0.3, w * 0.90)
+    weights[name] = round(w, 5)
+    return weights
 
-# ─── Run-Length Distribution ─────────────────────────────────────────────────
-
-def _run_length_distribution(sequence: list[str]) -> dict:
+def _run_dist(sequence: list[str]) -> dict:
     if not sequence:
         return {}
     dist: dict[int, int] = defaultdict(int)
     cnt = 1
     for i in range(1, len(sequence)):
-        if sequence[i] == sequence[i - 1]:
-            cnt += 1
-        else:
-            dist[cnt] += 1
-            cnt = 1
+        if sequence[i] == sequence[i-1]: cnt += 1
+        else: dist[cnt] += 1; cnt = 1
     dist[cnt] += 1
     return {str(k): v for k, v in sorted(dist.items())}
 
-
-# ─── Session Weight Tuning ───────────────────────────────────────────────────
-
-def _tune_weights(pattern_weights: dict, pattern_name: str, correct: bool) -> dict:
-    """Adjust a single pattern weight based on correctness."""
-    w = pattern_weights.get(pattern_name, 1.0)
-    if correct:
-        w = min(2.0, w * 1.05)
-    else:
-        w = max(0.3, w * 0.90)
-    pattern_weights[pattern_name] = round(w, 5)
-    return pattern_weights
-
-
-# ─── API Endpoints ───────────────────────────────────────────────────────────
+# ─── API ─────────────────────────────────────────────────────────────────────
 
 @app.get("/")
 def root():
-    return {"status": "TX Prediction Engine v2.0 running"}
-
-
-# ── Session Management ──────────────────────────────────────────────────────
+    return {"status": "TX Prediction Engine v2.1 running", "docs": "/docs"}
 
 @app.get("/sessions")
 def list_sessions():
-    """List all available sessions."""
-    sessions = []
+    out = []
     for fname in os.listdir(DATA_DIR):
         if fname.startswith("session_") and fname.endswith(".json"):
-            path = os.path.join(DATA_DIR, fname)
             try:
-                with open(path, "r") as f:
+                with open(os.path.join(DATA_DIR, fname)) as f:
                     s = json.load(f)
-                sessions.append({
-                    "session_id": s.get("session_id"),
-                    "description": s.get("description", ""),
-                    "total_entries": len(s.get("history", [])),
-                })
+                out.append({"session_id": s.get("session_id"), "description": s.get("description", ""),
+                             "total_entries": len(s.get("history", []))})
             except Exception:
                 pass
-    return {"sessions": sessions}
-
+    return {"sessions": out}
 
 @app.post("/sessions/create")
 def create_session(data: CreateSessionInput):
-    """Create a new (or overwrite) a session."""
-    safe = _safe_session_id(data.session_id)
-    session = {
-        "session_id": data.session_id,
-        "description": data.description,
-        "history": [],
-        "pattern_weights": {},
-    }
-    save_session(session)
-    return {"session_id": data.session_id, "safe_id": safe, "message": "Session created."}
-
-
-# ── Input Endpoints ─────────────────────────────────────────────────────────
+    sess = {"session_id": data.session_id, "description": data.description,
+            "history": [], "pattern_weights": {}}
+    save_session(sess)
+    return {"session_id": data.session_id, "message": "Session created."}
 
 @app.post("/upload-image")
-async def upload_image(file: UploadFile = File(...), session_id: str = "default"):
-    """Process a 20×5 grid image and append 100 results to history."""
+async def upload_image(file: UploadFile = File(...), session_id: str = DEFAULT_SESSION):
     content = await file.read()
     try:
-        results, debug_log, low_confidence_cells = process_grid_image(content)
+        results, debug_log, low_conf = process_grid_image(content)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-    session = load_session(session_id)
-    history = session["history"]
-    pattern_weights = session.get("pattern_weights", {})
+    sess     = load_session(session_id)
+    history  = sess["history"]
+    pw       = sess.get("pattern_weights", {})
+    sequence = [h["result"] for h in history]
 
+    # FIX data leakage: snapshot 1 lần TRƯỚC khi append toàn bộ batch
+    snap = _make_snapshot(history, sequence, pw)
     for r in results:
-        sequence = [h["result"] for h in history]
-        prediction = _make_prediction_snapshot(history, sequence, pattern_weights)
-        history.append(_make_entry(r, "image", None, prediction))
+        history.append(_make_entry(r, "image", None, snap))
 
-    session["history"] = history
-    save_session(session)
+    sess["history"] = history
+    save_session(sess)
 
-    low_count = len(low_confidence_cells)
+    lc = len(low_conf)
     return {
-        "count": len(results),
-        "results": results,
-        "debug_log": debug_log,
-        "low_confidence_cells": low_confidence_cells,
-        "low_confidence_count": low_count,
-        "warning": f"{low_count} ô có confidence thấp, kết quả có thể sai." if low_count > 0 else None,
-        "message": f"Đã thêm {len(results)} kết quả từ ảnh.",
+        "session_id":           session_id,
+        "count":                len(results),
+        "results":              results,
+        "low_confidence_cells": low_conf,
+        "low_confidence_count": lc,
+        "warning":              f"{lc} ô nhận diện không chắc — nên kiểm tra thủ công." if lc else None,
+        "debug_log":            debug_log,
     }
-
 
 @app.post("/append-manual")
 def append_manual(data: ManualInput):
-    """Append a single manual result."""
-    if data.result not in ["T", "X"]:
-        raise HTTPException(status_code=400, detail="Result must be T or X")
-
-    session = load_session(data.session_id)
-    history = session["history"]
-    pattern_weights = session.get("pattern_weights", {})
+    if data.result not in ("T", "X"):
+        raise HTTPException(status_code=400, detail="result phải là T hoặc X")
+    sess     = load_session(data.session_id)
+    history  = sess["history"]
     sequence = [h["result"] for h in history]
-
-    prediction = _make_prediction_snapshot(history, sequence, pattern_weights)
-    history.append(_make_entry(data.result, "manual", None, prediction))
-    session["history"] = history
-    save_session(session)
-
-    return {
-        "result": data.result,
-        "total_entries": len(history),
-        "session_id": data.session_id,
-    }
-
+    snap     = _make_snapshot(history, sequence, sess.get("pattern_weights", {}))
+    history.append(_make_entry(data.result, "manual", None, snap))
+    sess["history"] = history
+    save_session(sess)
+    return {"session_id": data.session_id, "result": data.result,
+            "total_entries": len(history), "prediction_made": snap["suggest"],
+            "signal_strength": snap["signal_strength"]}
 
 @app.post("/append-dice")
-def append_dice(dice_input: DiceInput):
-    """Validate dice values and append result to history."""
-    for d in [dice_input.d1, dice_input.d2, dice_input.d3]:
+def append_dice(data: DiceInput):
+    for d in [data.d1, data.d2, data.d3]:
         if not (1 <= d <= 6):
             raise HTTPException(status_code=400, detail="Mỗi xúc xắc phải từ 1 đến 6.")
-
-    result = dice_to_result(dice_input.d1, dice_input.d2, dice_input.d3)
-    session = load_session(dice_input.session_id)
-    history = session["history"]
-    pattern_weights = session.get("pattern_weights", {})
+    result   = dice_to_result(data.d1, data.d2, data.d3)
+    sess     = load_session(data.session_id)
+    history  = sess["history"]
     sequence = [h["result"] for h in history]
-
-    prediction = _make_prediction_snapshot(history, sequence, pattern_weights)
-    history.append(_make_entry(result, "dice", [dice_input.d1, dice_input.d2, dice_input.d3], prediction))
-    session["history"] = history
-    save_session(session)
-
-    return {
-        "dice": [dice_input.d1, dice_input.d2, dice_input.d3],
-        "sum": dice_input.d1 + dice_input.d2 + dice_input.d3,
-        "result": result,
-        "total_entries": len(history),
-        "session_id": dice_input.session_id,
-    }
-
-
-# ── Predict ─────────────────────────────────────────────────────────────────
+    snap     = _make_snapshot(history, sequence, sess.get("pattern_weights", {}))
+    history.append(_make_entry(result, "dice", [data.d1, data.d2, data.d3], snap))
+    sess["history"] = history
+    save_session(sess)
+    return {"session_id": data.session_id, "dice": [data.d1, data.d2, data.d3],
+            "sum": data.d1+data.d2+data.d3, "result": result,
+            "total_entries": len(history), "prediction_made": snap["suggest"],
+            "signal_strength": snap["signal_strength"]}
 
 @app.get("/predict")
-def predict(session_id: str = "default"):
-    """Return probabilities, suggestion, pattern, blend weights, and bias info."""
-    session = load_session(session_id)
-    history = session["history"]
-    pattern_weights = session.get("pattern_weights", {})
+def predict(session_id: str = DEFAULT_SESSION):
+    sess     = load_session(session_id)
+    history  = sess["history"]
+    pw       = sess.get("pattern_weights", {})
     sequence = [h["result"] for h in history]
 
-    probs = advanced_predict(sequence)
-    top_patterns = detect_top_patterns(sequence, pattern_weights)
-    bias = detect_bias(history)
-    blend_w = compute_blend_weights(sequence, top_patterns)
+    probs        = advanced_predict(sequence)
+    top_patterns = detect_top_patterns(sequence, pw)
+    bias         = detect_bias(history)
+    blend        = compute_blend_weights(sequence, top_patterns)
+    probs        = apply_bias(probs, bias)
 
     if top_patterns:
-        # Rank-weighted blend: #1 pattern gets 60% say, #2 gets 25%, #3 gets 15%.
-        _RANK_W = [0.60, 0.25, 0.15]
-        t_mass = sum(_RANK_W[i] for i, p in enumerate(top_patterns[:3]) if p["expected"] == "T")
-        x_mass = sum(_RANK_W[i] for i, p in enumerate(top_patterns[:3]) if p["expected"] == "X")
-        _total = t_mass + x_mass
-        if _total > 0:
-            t_mass /= _total
-            x_mass /= _total
-        pw = blend_w["pattern"]
-        mw = blend_w["markov"]
-        probs["T"] = round(probs["T"] * mw + t_mass * pw, 4)
-        probs["X"] = round(probs["X"] * mw + x_mass * pw, 4)
+        t_mass = sum(p["prob"] for p in top_patterns if p["expected"] == "T")
+        x_mass = sum(p["prob"] for p in top_patterns if p["expected"] == "X")
+        probs["T"] = round(probs["T"] * blend["markov"] + t_mass * blend["pattern"], 4)
+        probs["X"] = round(probs["X"] * blend["markov"] + x_mass * blend["pattern"], 4)
 
-    suggest = apply_bias_influence(probs, bias, history)
-    accuracy = compute_accuracy(history)
-
-    recent_manual = [
-        {
-            "source": h.get("source", "unknown"),
-            "dice": h.get("dice"),
-            "sum": sum(h.get("dice", [])) if h.get("dice") else None,
-            "result": h["result"],
-        }
-        for h in history if h.get("source") in ["dice", "manual"]
-    ]
+    suggest, strength = compute_signal(probs, top_patterns, sequence)
 
     return {
-        "session_id": session_id,
-        "total_entries": len(history),
-        "sequence_tail": sequence[-100:],
-        "recent_manual": recent_manual,
-        "probabilities": probs,
-        "suggest": suggest,
-        "blend_weights": blend_w,
-        "patterns": top_patterns,
-        "bias": bias,
-        "accuracy": accuracy,
+        "session_id":      session_id,
+        "total_entries":   len(history),
+        "sequence_tail":   sequence[-100:],
+        "probabilities":   probs,
+        "suggest":         suggest,
+        "signal_strength": strength,
+        "blend_weights":   blend,
+        "patterns":        top_patterns,
+        "bias":            bias,
+        "accuracy":        compute_accuracy(history),
     }
-
-
-# ── Feedback Loop ────────────────────────────────────────────────────────────
 
 @app.post("/confirm")
 def confirm(data: ConfirmInput):
-    """Mark the last unconfirmed predicted entry, tune weights, return accuracy."""
-    if data.actual not in ["T", "X"]:
-        raise HTTPException(status_code=400, detail="actual must be 'T' or 'X'")
+    if data.actual not in ("T", "X"):
+        raise HTTPException(status_code=400, detail="actual phải là T hoặc X")
+    sess    = load_session(data.session_id)
+    history = sess["history"]
+    pw      = sess.get("pattern_weights", {})
 
-    session = load_session(data.session_id)
-    history = session["history"]
-    pattern_weights = session.get("pattern_weights", {})
-
-    # Find last unconfirmed entry with a non-null prediction
-    target_idx = None
-    for i in range(len(history) - 1, -1, -1):
-        pred = history[i].get("prediction")
-        if pred and pred.get("suggest") is not None and not pred.get("confirmed"):
-            target_idx = i
+    target = None
+    for i in range(len(history)-1, -1, -1):
+        pred = history[i].get("prediction", {})
+        if pred.get("suggest") is not None and not pred.get("confirmed"):
+            target = i
             break
 
-    if target_idx is None:
-        raise HTTPException(status_code=404, detail="No unconfirmed predicted entry found.")
+    if target is None:
+        raise HTTPException(status_code=404, detail="Không tìm thấy entry chưa confirm.")
 
-    entry = history[target_idx]
-    pred = entry["prediction"]
-    was_correct = (pred["suggest"] == data.actual)
-
-    pred["confirmed"] = True
+    pred             = history[target]["prediction"]
+    was_correct      = pred["suggest"] == data.actual
+    pred["confirmed"]   = True
     pred["was_correct"] = was_correct
 
-    # Tune weights: top pattern in the snapshot
-    top_pattern = pred.get("top_pattern")
-    if top_pattern and isinstance(top_pattern, dict):
-        pname = top_pattern.get("name")
-        if pname:
-            pattern_weights = _tune_weights(pattern_weights, pname, was_correct)
+    tp = pred.get("top_pattern")
+    if tp and isinstance(tp, dict) and tp.get("name"):
+        pw = _tune(pw, tp["name"], was_correct)
 
-    session["history"] = history
-    session["pattern_weights"] = pattern_weights
-    save_session(session)
+    sess["history"]         = history
+    sess["pattern_weights"] = pw
+    save_session(sess)
 
-    accuracy = compute_accuracy(history)
     return {
-        "session_id": data.session_id,
-        "entry_index": target_idx,
-        "suggested": pred["suggest"],
-        "actual": data.actual,
+        "session_id":  data.session_id,
+        "entry_index": target,
+        "suggested":   pred["suggest"],
+        "actual":      data.actual,
         "was_correct": was_correct,
-        "accuracy": accuracy,
+        "accuracy":    compute_accuracy(history),
     }
-
-
-# ── Stats ────────────────────────────────────────────────────────────────────
 
 @app.get("/stats")
-def stats(session_id: str = "default"):
-    """Return session statistics."""
-    session = load_session(session_id)
-    history = session["history"]
+def stats(session_id: str = DEFAULT_SESSION):
+    sess     = load_session(session_id)
+    history  = sess["history"]
     sequence = [h["result"] for h in history]
-    pattern_weights = session.get("pattern_weights", {})
+    total    = len(sequence)
 
-    t_count = sequence.count("T")
-    x_count = sequence.count("X")
-    total = len(sequence)
-
-    # Current streak
-    current_streak = 0
+    streak_val = sequence[-1] if sequence else None
+    streak_len = 0
     if sequence:
-        v = sequence[-1]
-        for c in reversed(sequence):
-            if c == v:
-                current_streak += 1
-            else:
-                break
+        for v in reversed(sequence):
+            if v == streak_val: streak_len += 1
+            else: break
 
-    run_dist = _run_length_distribution(sequence)
-    accuracy = compute_accuracy(history)
+    t = sequence.count("T")
+    x = sequence.count("X")
 
     return {
-        "session_id": session_id,
-        "description": session.get("description", ""),
-        "total_entries": total,
-        "t_count": t_count,
-        "x_count": x_count,
-        "t_ratio": round(t_count / total, 4) if total else None,
-        "x_ratio": round(x_count / total, 4) if total else None,
-        "current_streak": current_streak,
-        "current_streak_value": sequence[-1] if sequence else None,
-        "run_length_distribution": run_dist,
-        "pattern_weights": pattern_weights,
-        "accuracy": accuracy,
+        "session_id":              session_id,
+        "description":             sess.get("description", ""),
+        "total_entries":           total,
+        "t_count":                 t,
+        "x_count":                 x,
+        "t_ratio":                 round(t/total, 4) if total else None,
+        "x_ratio":                 round(x/total, 4) if total else None,
+        "current_streak_value":    streak_val,
+        "current_streak_length":   streak_len,
+        "run_length_distribution": _run_dist(sequence),
+        "pattern_weights":         sess.get("pattern_weights", {}),
+        "accuracy":                compute_accuracy(history),
     }
 
-
-# ── Reset ────────────────────────────────────────────────────────────────────
-
 @app.post("/reset")
-def reset(session_id: str = "default"):
-    """Clear all history for a session."""
-    session = load_session(session_id)
-    session["history"] = []
-    session["pattern_weights"] = {}
-    save_session(session)
-    return {"message": "Lịch sử đã được xóa.", "session_id": session_id, "total_entries": 0}
+def reset(session_id: str = DEFAULT_SESSION):
+    sess = load_session(session_id)
+    sess["history"]         = []
+    sess["pattern_weights"] = {}
+    save_session(sess)
+    return {"message": f"Đã xóa session '{session_id}'.", "total_entries": 0}
